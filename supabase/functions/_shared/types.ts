@@ -1,4 +1,4 @@
-export type ProviderName = 'easypost' | 'shopify' | 'amazon_sp_api';
+export type ProviderName = 'easypost' | 'shopify' | 'amazon_sp_api' | 'gmail';
 export type SyncMode = 'manual' | 'open' | 'scheduled' | 'webhook';
 
 export interface IntegrationAccount {

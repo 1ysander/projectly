@@ -13,6 +13,7 @@ import {
 import { syncEasyPostProvider } from './providers/easypost.ts';
 import { syncShopifyProvider } from './providers/shopify.ts';
 import { syncAmazonProvider } from './providers/amazon.ts';
+import { syncGmailProvider } from './providers/gmail.ts';
 
 type SupabaseAdminClient = ReturnType<typeof createClient>;
 
@@ -248,6 +249,8 @@ async function runProviderSync(ctx: ProviderSyncContext): Promise<ProviderSyncRe
       return syncShopifyProvider(ctx);
     case 'amazon_sp_api':
       return syncAmazonProvider(ctx);
+    case 'gmail':
+      return syncGmailProvider(ctx);
     default:
       throw new Error(`Unsupported provider: ${ctx.account.provider}`);
   }

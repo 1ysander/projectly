@@ -16,6 +16,7 @@ import { MerchantAvatar } from '../components/shared/MerchantAvatar';
 import { EmptyState } from '../components/shared/EmptyState';
 import { FilterDialog, FilterOptions } from '../components/shared/FilterDialog';
 import { AddReturnModal } from '../components/modals/AddReturnModal';
+import { AddReturnTrackingModal } from '../components/modals/AddReturnTrackingModal';
 import { toast } from 'sonner';
 
 export function Returns() {
@@ -26,6 +27,7 @@ export function Returns() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({});
   const [addReturnOpen, setAddReturnOpen] = useState(false);
+  const [addReturnTrackingOpen, setAddReturnTrackingOpen] = useState(false);
 
   const availableStatuses = useMemo(() => {
     const statuses = new Set(returns.map((r) => r.status));
@@ -108,6 +110,22 @@ export function Returns() {
           <h2 className="text-foreground">Returns</h2>
           <p className="text-[0.85rem] text-muted-foreground">{returns.length} returns tracked</p>
         </div>
+        <div className="hidden sm:flex items-center gap-2">
+          <button
+            onClick={() => setAddReturnTrackingOpen(true)}
+            className="h-9 px-4 rounded-xl bg-white border border-border text-[0.85rem] text-muted-foreground flex items-center gap-1.5 hover:bg-accent cursor-pointer"
+            style={{ fontWeight: 500 }}
+          >
+            <RotateCcw size={14} /> Track return label
+          </button>
+          <button
+            onClick={() => setAddReturnOpen(true)}
+            className="h-9 px-4 rounded-xl bg-cobalt text-white text-[0.85rem] hover:bg-cobalt-dark cursor-pointer"
+            style={{ fontWeight: 500 }}
+          >
+            Start a return
+          </button>
+        </div>
       </div>
 
       {/* Controls */}
@@ -136,9 +154,11 @@ export function Returns() {
         <EmptyState
           icon={RotateCcw}
           title="No returns yet"
-          description="Start a return from any of your orders. We'll track it end to end."
-          actionLabel="Start a return from an order"
+          description="Start a return from any of your orders or track an existing return label."
+          actionLabel="Start a return"
           onAction={() => setAddReturnOpen(true)}
+          secondaryLabel="Track a return label"
+          onSecondary={() => setAddReturnTrackingOpen(true)}
         />
       ) : (
         <div className="bg-white rounded-2xl border border-border overflow-hidden divide-y divide-border">
@@ -214,6 +234,10 @@ export function Returns() {
         availableMerchants={availableMerchants}
       />
       <AddReturnModal open={addReturnOpen} onClose={() => setAddReturnOpen(false)} />
+      <AddReturnTrackingModal
+        open={addReturnTrackingOpen}
+        onClose={() => setAddReturnTrackingOpen(false)}
+      />
     </div>
   );
 }
